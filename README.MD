@@ -5,7 +5,7 @@ This is the repo for our web-based API for this [project](https://github.com/jsc
 
 Fila is a 3d-printing marketplace. Publishers are able to request projects (print jobs) across the platform. 
 These projects include model specifics, print quality, build time, price, currency, and other job specific details needed.
-Fullfillers may browse the posted projects to find appropriate models for their printers, contact project publishers, and request projects as well.
+Fulfillers may browse the posted projects to find appropriate models for their printers, contact project publishers, and request projects as well.
 Fila aims to create an open, secure marketplace where enthusiasts and the curious can exchange products and collaborate on projects.
 
 ## Tech Stack
