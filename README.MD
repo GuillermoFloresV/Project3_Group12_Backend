@@ -40,3 +40,6 @@ Fila aims to create an open, secure marketplace where enthusiasts and the curiou
 
 
 
+### Helpful Resources:
+- medium article for connection:
+  -   https://medium.com/techwasti/spring-boot-firebase-crud-b0afab27b26e
