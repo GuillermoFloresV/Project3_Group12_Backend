@@ -20,7 +20,7 @@ public class FirebaseInitialize {
 
                 FileInputStream serviceAccount =
                         new FileInputStream("./serviceaccount.json");
-
+                System.out.println("hi");
                 FirebaseOptions options = new FirebaseOptions.Builder()
                         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                         .setDatabaseUrl("https://fila-8f418-default-rtdb.firebaseio.com/")
@@ -32,6 +32,7 @@ public class FirebaseInitialize {
             }
         } else {
             try {
+                System.out.println("hi, but over here instead");
                 FirebaseOptions options = new FirebaseOptions.Builder()
                         .setCredentials(GoogleCredentials.fromStream(createFirebaseCredential()))
                         .setDatabaseUrl("https://fila-8f418-default-rtdb.firebaseio.com/")
@@ -61,7 +62,7 @@ public class FirebaseInitialize {
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(firebaseCredential);
-
+        System.out.println(jsonString);
         return IOUtils.toInputStream(jsonString);
     }
 }
