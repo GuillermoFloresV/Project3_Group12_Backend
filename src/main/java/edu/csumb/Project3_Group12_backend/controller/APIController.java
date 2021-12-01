@@ -58,8 +58,14 @@ public class APIController {
     }
 
     @PostMapping("/createNewProject")
-    public ResponseEntity<Object> createNewProject(@RequestParam String proposer, @RequestParam String description, @RequestParam float budget) throws IOException, ExecutionException, InterruptedException {
-        firebaseService.saveNewProject(new Project(proposer, description, budget));
+    public ResponseEntity<Object> createNewProject(@RequestParam String proposer, @RequestParam String description, @RequestParam String projectName, @RequestParam float budget) throws IOException, ExecutionException, InterruptedException {
+        firebaseService.saveNewProject(new Project(proposer, description, projectName, budget));
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("/updateProject")
+    public ResponseEntity<Object> updateProject(@RequestParam String proposer, @RequestParam String description, @RequestParam String projectName, @RequestParam float budget) throws IOException, ExecutionException, InterruptedException {
+        firebaseService.updateProject(new Project(proposer, description, projectName, budget));
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 

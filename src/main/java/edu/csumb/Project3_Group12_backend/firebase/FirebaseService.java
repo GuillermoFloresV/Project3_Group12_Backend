@@ -35,6 +35,20 @@ public class FirebaseService {
 
     public void saveNewProject(Project project) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
-        ApiFuture<DocumentReference> apiFuture = firestore.collection("posts").add(project);
+        ApiFuture<WriteResult> apiFuture = firestore.collection("posts").document(keyGenerator(project.getProjectName(), project.getProposer())).set(project);
+    }
+
+    public void updateProject(Project project) throws ExecutionException, InterruptedException {
+        Firestore firestore = FirestoreClient.getFirestore();
+        ApiFuture<WriteResult> apiFuture = firestore.collection("posts").document("proj:"+project.getProjectName()+" user:"+project.getProposer()).update("name", project.getProjectName());
+        ApiFuture<WriteResult> apiFuture2 = firestore.collection("posts").document("proj:"+project.getProjectName()+" user:"+project.getProposer()).update("budget", project.getBudget());
+        ApiFuture<WriteResult> apiFuture3 = firestore.collection("posts").document("proj:"+project.getProjectName()+" user:"+project.getProposer()).update("proposer", project.getProposer());
+        ApiFuture<WriteResult> apiFuture4 = firestore.collection("posts").document("proj:"+project.getProjectName()+" user:"+project.getProposer()).update("isOpen", project.isClaimed());
+        ApiFuture<WriteResult> apiFuture5 = firestore.collection("posts").document("proj:"+project.getProjectName()+" user:"+project.getProposer()).update("description", project.getDescription());
+        ApiFuture<WriteResult> apiFuture6 = firestore.collection("posts").document("proj:"+project.getProjectName()+" user:"+project.getProposer()).update("claimedBy", project.getClaimedBy());
+    }
+
+    public String keyGenerator(String name, String email){
+        return "proj:"+name+" user:"+email;
     }
 }

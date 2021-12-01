@@ -4,6 +4,7 @@ import com.google.cloud.firestore.DocumentReference;
 
 public class Project {
     private String proposer;
+    private String projectName;
     private String description;
     private float budget;
     private boolean isClaimed;
@@ -11,14 +12,14 @@ public class Project {
 
     public Project (){}
 
-    public Project(String proposer, String description, float budget) {
+    public Project(String proposer, String description, String projectName, float budget) {
         this.proposer = proposer;
         this.description = description;
         this.budget = budget;
         this.isClaimed = false;
     }
 
-    public Project (String proposer, String description, float budget, boolean isClaimed, DocumentReference claimedBy){
+    public Project (String proposer, String description, String projectName, float budget, boolean isClaimed, DocumentReference claimedBy){
         this.proposer = proposer;
         this.description = description;
         this.budget = budget;
@@ -55,8 +56,8 @@ public class Project {
         return isClaimed;
     }
 
-    public void setClaimed(boolean claimed) {
-        isClaimed = claimed;
+    public void setClaimed(boolean isClaimed) {
+        isClaimed = isClaimed;
     }
 
     public DocumentReference getClaimedBy() {
@@ -65,5 +66,13 @@ public class Project {
 
     public void setClaimedBy(DocumentReference claimedBy) {
         this.claimedBy = claimedBy;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 }
