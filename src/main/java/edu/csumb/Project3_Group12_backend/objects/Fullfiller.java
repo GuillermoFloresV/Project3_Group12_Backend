@@ -1,4 +1,4 @@
-package edu.csumb.Project3_Group12_backend;
+package edu.csumb.Project3_Group12_backend.objects;
 
 import com.google.cloud.firestore.GeoPoint;
 

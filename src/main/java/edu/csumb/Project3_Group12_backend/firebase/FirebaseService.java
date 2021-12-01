@@ -3,7 +3,8 @@ package edu.csumb.Project3_Group12_backend.firebase;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import edu.csumb.Project3_Group12_backend.Fullfiller;
+import edu.csumb.Project3_Group12_backend.objects.Fullfiller;
+import edu.csumb.Project3_Group12_backend.objects.Project;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,5 +31,10 @@ public class FirebaseService {
     public void saveNewUser(Fullfiller fullfiller) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> apiFuture = firestore.collection("users").document(fullfiller.getEmail()).set(fullfiller);
+    }
+
+    public void saveNewProject(Project project) throws ExecutionException, InterruptedException {
+        Firestore firestore = FirestoreClient.getFirestore();
+        ApiFuture<WriteResult> apiFuture = firestore.collection("posts").document().set(project);
     }
 }

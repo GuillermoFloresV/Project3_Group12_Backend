@@ -1,7 +1,7 @@
 package edu.csumb.Project3_Group12_backend.controller;
-import edu.csumb.Project3_Group12_backend.Fullfiller;
-import edu.csumb.Project3_Group12_backend.FullfillerService;
+import edu.csumb.Project3_Group12_backend.objects.Fullfiller;
 import edu.csumb.Project3_Group12_backend.firebase.FirebaseService;
+import edu.csumb.Project3_Group12_backend.objects.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +54,12 @@ public class APIController {
     @PostMapping("/createNewUser")
     public ResponseEntity<Object> createNewUser(@RequestParam String email, @RequestParam String username, @RequestParam String password) throws IOException, ExecutionException, InterruptedException {
         firebaseService.saveNewUser(new Fullfiller(email, username, password));
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/createNewProject")
+    public ResponseEntity<Object> createNewProject(@RequestParam String proposer, @RequestParam String description, @RequestParam float budget) throws IOException, ExecutionException, InterruptedException {
+        firebaseService.saveNewProject(new Project(proposer, description, budget));
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
