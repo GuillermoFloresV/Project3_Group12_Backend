@@ -1,4 +1,5 @@
 package edu.csumb.Project3_Group12_backend.controller;
+import com.google.cloud.firestore.DocumentReference;
 import edu.csumb.Project3_Group12_backend.objects.Fullfiller;
 import edu.csumb.Project3_Group12_backend.firebase.FirebaseService;
 import edu.csumb.Project3_Group12_backend.objects.Project;
@@ -54,19 +55,19 @@ public class APIController {
     @PostMapping("/createNewUser")
     public ResponseEntity<Object> createNewUser(@RequestParam String email, @RequestParam String username, @RequestParam String password) throws IOException, ExecutionException, InterruptedException {
         firebaseService.saveNewUser(new Fullfiller(email, username, password));
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/createNewProject")
     public ResponseEntity<Object> createNewProject(@RequestParam String proposer, @RequestParam String description, @RequestParam String projectName, @RequestParam float budget) throws IOException, ExecutionException, InterruptedException {
         firebaseService.saveNewProject(new Project(proposer, description, projectName, budget));
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/updateProject")
-    public ResponseEntity<Object> updateProject(@RequestParam String proposer, @RequestParam String description, @RequestParam String projectName, @RequestParam float budget) throws IOException, ExecutionException, InterruptedException {
-        firebaseService.updateProject(new Project(proposer, description, projectName, budget));
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    public ResponseEntity<Object> updateProject(@RequestParam String proposer, @RequestParam String description, @RequestParam String projectName, @RequestParam float budget, @RequestParam boolean isClaimed, @RequestParam DocumentReference claimedBy) throws IOException, ExecutionException, InterruptedException {
+        firebaseService.updateProject(new Project(proposer, description, projectName, budget, isClaimed, claimedBy));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

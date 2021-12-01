@@ -25,9 +25,8 @@ public class Project {
         this.projectName = projectName;
         this.description = description;
         this.budget = budget;
-        this.isClaimed = false;
-        this.claimedBy = null;
-
+        this.isClaimed = isClaimed;
+        this.claimedBy = claimedBy;
     }
 
     public String getProposer() {
