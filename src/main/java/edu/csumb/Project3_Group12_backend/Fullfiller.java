@@ -1,37 +1,84 @@
 package edu.csumb.Project3_Group12_backend;
 
+import com.google.cloud.firestore.GeoPoint;
+
 public class Fullfiller {
-    private String name;
+    private String username;
+    private float rating;
+    private GeoPoint city;
+    private boolean isFullfiller;
+    private String email;
+    private String password;
 
-    private int rating;
+    public Fullfiller(){}
 
-    private String city;
-
-
-    public Fullfiller(String name, int rating, String city) {
+    public Fullfiller(String email, String username, String password) {
+        this.username = username;
+        this.rating = 0;
+        this.isFullfiller = false;
+        this.city = null;
+        this.email = email;
+        this.password = password;
+    }
+    public Fullfiller(String email, String username, String password ,float rating, GeoPoint city, boolean isFullfiller) {
+        this.username = username;
+        this.rating = rating;
+        this.isFullfiller = isFullfiller;
+        this.city = city;
+        this.email = email;
+        this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public int getRating() {
-        return rating;
-    }
 
     public void setAge(int rating) {
         this.rating = rating;
     }
 
-    public String getCity() {
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public GeoPoint getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(GeoPoint city) {
         this.city = city;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isFullfiller() {
+        return isFullfiller;
+    }
+
+    public void setFullfiller(boolean fullfiller) {
+        isFullfiller = fullfiller;
     }
 }
