@@ -27,5 +27,43 @@ public class Project {
 
     }
 
+    public String getProposer() {
+        return proposer;
+    }
 
+    public void setProposer(String proposer) {
+        this.proposer = proposer;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public float getBudget() {
+        return budget;
+    }
+
+    public void setBudget(float budget) {
+        this.budget = budget;
+    }
+
+    public boolean isClaimed() {
+        return isClaimed;
+    }
+
+    public void setClaimed(boolean claimed) {
+        isClaimed = claimed;
+    }
+
+    public DocumentReference getClaimedBy() {
+        return claimedBy;
+    }
+
+    public void setClaimedBy(DocumentReference claimedBy) {
+        this.claimedBy = claimedBy;
+    }
 }
