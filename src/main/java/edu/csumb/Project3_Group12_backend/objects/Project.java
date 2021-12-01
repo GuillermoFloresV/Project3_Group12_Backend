@@ -14,6 +14,7 @@ public class Project {
 
     public Project(String proposer, String description, String projectName, float budget) {
         this.proposer = proposer;
+        this.projectName = projectName;
         this.description = description;
         this.budget = budget;
         this.isClaimed = false;
@@ -21,6 +22,7 @@ public class Project {
 
     public Project (String proposer, String description, String projectName, float budget, boolean isClaimed, DocumentReference claimedBy){
         this.proposer = proposer;
+        this.projectName = projectName;
         this.description = description;
         this.budget = budget;
         this.isClaimed = false;
