@@ -35,6 +35,6 @@ public class FirebaseService {
 
     public void saveNewProject(Project project) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> apiFuture = firestore.collection("posts").document().set(project);
+        ApiFuture<DocumentReference> apiFuture = firestore.collection("posts").add(project);
     }
 }
