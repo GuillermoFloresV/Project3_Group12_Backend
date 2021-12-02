@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class FBInitialize {
 
-
-
         @PostConstruct
         public void initialize() {
             try {
@@ -34,5 +32,5 @@ public class FBInitialize {
             }
 
         }
-    }
+}
 

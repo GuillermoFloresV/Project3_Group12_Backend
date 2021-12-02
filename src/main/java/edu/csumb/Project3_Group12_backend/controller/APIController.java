@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class APIController {
-//    @GetMapping("/")
-//    public String test(){
-//        return "It works!";
-//    }
+    @GetMapping("/")
+    public String test(){
+        return "It works!";
+    }
 
     @Autowired
     FullfillerService fullfillerService;
