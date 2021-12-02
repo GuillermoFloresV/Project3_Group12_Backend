@@ -1,5 +1,6 @@
 package edu.csumb.Project3_Group12_backend.controller;
 
+import edu.csumb.Project3_Group12_backend.Fullfiller;
 import edu.csumb.Project3_Group12_backend.Project;
 import edu.csumb.Project3_Group12_backend.firebase.FirebaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,12 @@ public class APIControllerProjects {
             throws IOException, ExecutionException, InterruptedException {
         firebaseService.saveNewProject(new Project(project_id, projectName, budget, currency, isOpen, urlString, datePublished, anon));
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/claimProject")
+    public List<Project> claimProject(@RequestParam Project project, @RequestParam List<Project> projectsClaimedList, @RequestParam Fullfiller fullfiller)
+            throws IOException, ExecutionException, InterruptedException {
+        return firebaseService.claimProject(project, projectsClaimedList, fullfiller);
     }
 
 

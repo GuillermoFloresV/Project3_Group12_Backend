@@ -9,6 +9,7 @@ public class Project {
     private float budget;
     private String currency;
     private boolean isOpen;
+    private String claimedBy;
     private String urlString;
     private String datePublished;
     private boolean anon;
@@ -20,7 +21,8 @@ public class Project {
         this.projectName = projectName;
         this.budget = budget;
         this.currency = currency;
-        this.isOpen = isOpen;
+        this.isOpen = true;
+        this.claimedBy = null;
         this.urlString = urlString;
         this.datePublished = datePublished;
         this.anon = anon;
@@ -30,6 +32,8 @@ public class Project {
     public Project(Integer project_id, String projectName, String currency, boolean isOpen, boolean anon) {
         this.project_id = project_id;
         this.projectName = projectName;
+        this.isOpen = true;
+        this.claimedBy = null;
         this.currency = currency;
         this.anon = anon;
     }
@@ -99,6 +103,14 @@ public class Project {
 
     public void setProject_id(Integer project_id) {
         this.project_id = project_id;
+    }
+
+    public String getClaimedBy() {
+        return claimedBy;
+    }
+
+    public void setClaimedBy(String claimedBy) {
+        this.claimedBy = claimedBy;
     }
 }
 
