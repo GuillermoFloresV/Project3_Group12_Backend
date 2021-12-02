@@ -38,5 +38,4 @@ serviceaccount.json
 
 
 #Projects Work
-src/main/java/edu/csumb/Project3_Group12_backend/Project.java
-src/main/java/edu/csumb/Project3_Group12_backend/controller/APIControllerProjects.java
+
