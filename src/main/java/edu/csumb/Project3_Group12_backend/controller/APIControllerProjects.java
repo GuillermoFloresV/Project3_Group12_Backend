@@ -29,9 +29,9 @@ public class APIControllerProjects {
 
     @PostMapping("/createNewProject")
     public ResponseEntity<Object> createNewProject(@RequestParam Integer project_id, @RequestParam String projectName, @RequestParam float budget, String currency,
-                                                        @RequestParam boolean isOpen, @RequestParam String urlString, @RequestParam String datePublished, @RequestParam boolean anon)
+                                                        @RequestParam boolean isOpen, @RequestParam String urlString, @RequestParam String datePublished, @RequestParam boolean isClaimed, @RequestParam boolean anon)
             throws IOException, ExecutionException, InterruptedException {
-        firebaseService.saveNewProject(new Project(project_id, projectName, budget, currency, isOpen, urlString, datePublished, anon));
+        firebaseService.saveNewProject(new Project(project_id, projectName, budget, currency, urlString,  datePublished,isOpen, isClaimed , anon));
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
