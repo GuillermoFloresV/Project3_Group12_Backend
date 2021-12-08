@@ -1,5 +1,6 @@
 package edu.csumb.Project3_Group12_backend.controller;
 
+import edu.csumb.Project3_Group12_backend.Fullfiller;
 import edu.csumb.Project3_Group12_backend.Project;
 import edu.csumb.Project3_Group12_backend.firebase.FirebaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,24 @@ public class APIControllerProjects {
     public List<Project> getAllProjects() throws ExecutionException, InterruptedException {
         return firebaseService.getProjects();
     }
-
+        //Integer project_id, String projectName, float budget, String description, String email,
+        //                   String proposer, String currency, String urlString,
+        //                   String datePublished, boolean isClaimed, String claimedBy, boolean anon)
     @PostMapping("/createNewProject")
     public ResponseEntity<Object> createNewProject(@RequestParam Integer project_id, @RequestParam String projectName, @RequestParam float budget, String currency,
-                                                        @RequestParam boolean isOpen, @RequestParam String urlString, @RequestParam String datePublished, @RequestParam boolean anon)
+                                                   @RequestParam String description, @RequestParam String email, @RequestParam String proposer,
+                                                   @RequestParam String urlString, @RequestParam String datePublished, @RequestParam boolean isClaimed,
+                                                   @RequestParam String claimedBy, @RequestParam boolean anon)
             throws IOException, ExecutionException, InterruptedException {
-        firebaseService.saveNewProject(new Project(project_id, projectName, budget, currency, isOpen, urlString, datePublished, anon));
+        firebaseService.saveNewProject(new Project(project_id, projectName, budget, currency, description, email, proposer, urlString,
+                                                    datePublished, isClaimed, claimedBy, anon));
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/claimProject")
+    public List<Project> claimProject(@RequestParam Project project, @RequestParam List<Project> projectsClaimedList, @RequestParam Fullfiller fullfiller)
+            throws IOException, ExecutionException, InterruptedException {
+        return firebaseService.claimProject(project, projectsClaimedList, fullfiller);
     }
 
 
