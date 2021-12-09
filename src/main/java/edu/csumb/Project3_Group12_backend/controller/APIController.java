@@ -1,4 +1,5 @@
 package edu.csumb.Project3_Group12_backend.controller;
+import com.google.cloud.firestore.GeoPoint;
 import edu.csumb.Project3_Group12_backend.Fullfiller;
 import edu.csumb.Project3_Group12_backend.FullfillerService;
 import edu.csumb.Project3_Group12_backend.firebase.FirebaseService;
@@ -35,7 +36,14 @@ public class APIController {
     public ResponseEntity<Object> createNewUser(@RequestParam String email, @RequestParam String username, @RequestParam String password)
                                                 throws IOException, ExecutionException, InterruptedException {
         firebaseService.saveNewUser(new Fullfiller(email, username, password));
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/updateUser")
+    public ResponseEntity<Object> updateUser(@RequestParam String username, @RequestParam String password)
+            throws IOException, ExecutionException, InterruptedException {
+        firebaseService.saveNewUser(new Fullfiller(username, password));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
