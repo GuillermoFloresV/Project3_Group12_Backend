@@ -1,5 +1,7 @@
 package edu.csumb.Project3_Group12_backend.controller;
 
+import com.fasterxml.jackson.databind.jsonschema.JsonSerializableSchema;
+import com.google.auto.value.extension.serializable.SerializableAutoValue;
 import edu.csumb.Project3_Group12_backend.Fullfiller;
 import edu.csumb.Project3_Group12_backend.Project;
 import edu.csumb.Project3_Group12_backend.firebase.FirebaseService;
