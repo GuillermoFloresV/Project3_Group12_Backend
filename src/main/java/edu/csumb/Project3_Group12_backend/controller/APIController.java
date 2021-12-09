@@ -39,8 +39,8 @@ public class APIController {
     }
 
     @PutMapping("/updateUser")
-    public ResponseEntity<Object> updateUser(@RequestParam String email, @RequestParam String username, @RequestParam String password, @RequestParam String imamgeURL) throws IOException, ExecutionException, InterruptedException {
-        firebaseService.updateUser(email, username, password, imamgeURL);
+    public ResponseEntity<Object> updateUser(@RequestParam String email, @RequestParam String username, @RequestParam String password, @RequestParam String imageURL) throws IOException, ExecutionException, InterruptedException {
+        firebaseService.updateUser(email, username, password, imageURL);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

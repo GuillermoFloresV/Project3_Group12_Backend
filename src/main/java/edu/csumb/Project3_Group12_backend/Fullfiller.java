@@ -91,4 +91,12 @@ public class Fullfiller {
     public void setFullfiller(boolean fullfiller) {
         isFullfiller = fullfiller;
     }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
 }
