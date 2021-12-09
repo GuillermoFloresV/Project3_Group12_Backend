@@ -1,12 +1,10 @@
 package edu.csumb.Project3_Group12_backend.firebase;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.ExceptionHandler;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import edu.csumb.Project3_Group12_backend.Fullfiller;
 import edu.csumb.Project3_Group12_backend.Project;
-import io.netty.handler.codec.http.HttpExpectationFailedEvent;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -119,35 +117,59 @@ public class FirebaseService {
      * its currently set up to also update a projectsClaimedList if we choose to keep a list of claimed projects
      * we may want to consider just searching firestore whenever we want a list of projects
      * @param project
-     * @param projectsClaimedList
      * @param fullfiller
      * @return a list of claimed projects by the user
      */
-    public List<Project> claimProject(Project project, List<Project> projectsClaimedList, Fullfiller fullfiller) throws ExecutionException, InterruptedException {
+    public void claimProject(Project project, Fullfiller fullfiller) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
-        DocumentReference claimedProjectReference = firestore.collection("post").document(project.getProjectName());
-        System.out.println("Trying to claimed project with ID: " + claimedProjectReference.getId());
+        DocumentReference claimedProjectReference = firestore.collection("post").document(String.valueOf(project.getIsClaimed()));
+        DocumentReference claimedProjectReferenceName = firestore.collection("post").document(project.getProjectName());
+        System.out.println("Trying to claim project: " + claimedProjectReferenceName);
 
         //check to see if project has already been claimed
-        Boolean claimed = false;
-        Iterable<CollectionReference> collections =claimedProjectReference.listCollections();
-        for (CollectionReference collRef : collections) {
-            if(collRef.whereEqualTo("claimedBy",null).equals(false)){
-                System.out.println("project has been claimed, collRef id: " + collRef.getId());
-                claimed = true;
-            }
-        }
-        if(!claimed) {
-            ApiFuture<WriteResult> future = claimedProjectReference.update("claimedBy", fullfiller.getEmail());
-            WriteResult result = future.get();
-            System.out.println("Claim project write result: " + result);
-            //Todo: add to claimed list:
-        }
+//        Boolean claimed = false;
+        ApiFuture<DocumentSnapshot> potentialProject = claimedProjectReference.get();
 
-        return projectsClaimedList;
+        if (claimedProjectReference.equals(false)) {
+            ApiFuture<WriteResult> futureClaimer = claimedProjectReference.update("claimedBy", fullfiller.getUsername());
+            ApiFuture<WriteResult> futureIsClaimed = claimedProjectReference.update("isClaimed", true);
+            WriteResult resultClaimer = futureClaimer.get();
+            WriteResult resultIsClaimed = futureIsClaimed.get();
+            System.out.println("Claim project write result: " + resultClaimer);
+            System.out.println("Claim project write result: " + resultIsClaimed);
+            System.out.println("project has been claimed successfully");
+        } else {
+            System.out.println("project has been claimed already");
+        }
     }
 
 }
 //other option for user query: https://firebase.google.com/docs/firestore/query-data/get-data
 //    ApiFuture<QuerySnapshot> future =
 //               firestore.collection("users").whereEqualTo(email, true).get()
+
+
+//***previous version of claimProject -> takes a list which I don't think we'll be needing
+//public List<Project> claimProject(Project project, List<Project> projectsClaimedList, Fullfiller fullfiller) throws ExecutionException, InterruptedException {
+//    Firestore firestore = FirestoreClient.getFirestore();
+//    DocumentReference claimedProjectReference = firestore.collection("post").document(project.getProjectName());
+//    System.out.println("Trying to claimed project with ID: " + claimedProjectReference.getId());
+//
+//    //check to see if project has already been claimed
+//    Boolean claimed = false;
+//    Iterable<CollectionReference> collections =claimedProjectReference.listCollections();
+//    for (CollectionReference collRef : collections) {
+//        if(collRef.whereEqualTo("claimedBy",null).equals(false)){
+//            System.out.println("project has been claimed, collRef id: " + collRef.getId());
+//            claimed = true;
+//        }
+//    }
+//    if(!claimed) {
+//        ApiFuture<WriteResult> future = claimedProjectReference.update("claimedBy", fullfiller.getEmail());
+//        WriteResult result = future.get();
+//        System.out.println("Claim project write result: " + result);
+//        //Todo: add to claimed list:
+//    }
+//
+//    return projectsClaimedList;
+//}

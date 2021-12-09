@@ -41,10 +41,15 @@ public class APIControllerProjects {
     }
 
     @PostMapping("/claimProject")
-    public List<Project> claimProject(@RequestParam Project project, @RequestParam List<Project> projectsClaimedList, @RequestParam Fullfiller fullfiller)
+    public void claimProject(@RequestParam Project project, @RequestParam Fullfiller fullfiller)
             throws IOException, ExecutionException, InterruptedException {
-        return firebaseService.claimProject(project, projectsClaimedList, fullfiller);
     }
+    //**Old claimProject postMapping, i don't think we need the list
+//    @PostMapping("/claimProject")
+//    public List<Project> claimProject(@RequestParam Project project, @RequestParam List<Project> projectsClaimedList, @RequestParam Fullfiller fullfiller)
+//            throws IOException, ExecutionException, InterruptedException {
+//        return firebaseService.claimProject(project, projectsClaimedList, fullfiller);
+//    }
 
 
 }
