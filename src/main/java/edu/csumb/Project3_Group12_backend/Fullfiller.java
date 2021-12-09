@@ -9,6 +9,7 @@ public class Fullfiller {
     private boolean isFullfiller;
     private String email;
     private String password;
+    private String imageURL;
 
     public Fullfiller(){}
 
@@ -19,11 +20,13 @@ public class Fullfiller {
         this.city = null;
         this.email = email;
         this.password = password;
+        this.imageURL = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
     }
 
     //For Users updating their own profile
-    public Fullfiller(String username, String password) {
+    public Fullfiller(String email, String username, String password, String imageURL) {
         this.username = username;
+        this.imageURL = imageURL;
         this.password = password;
     }
 

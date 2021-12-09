@@ -33,16 +33,14 @@ public class APIController {
     }
 
     @PostMapping("/createNewUser")
-    public ResponseEntity<Object> createNewUser(@RequestParam String email, @RequestParam String username, @RequestParam String password)
-                                                throws IOException, ExecutionException, InterruptedException {
+    public ResponseEntity<Object> createNewUser(@RequestParam String email, @RequestParam String username, @RequestParam String password) throws IOException, ExecutionException, InterruptedException {
         firebaseService.saveNewUser(new Fullfiller(email, username, password));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/updateUser")
-    public ResponseEntity<Object> updateUser(@RequestParam String email, @RequestParam String username, @RequestParam String password)
-            throws IOException, ExecutionException, InterruptedException {
-        firebaseService.updateUser(email, username, password);
+    public ResponseEntity<Object> updateUser(@RequestParam String email, @RequestParam String username, @RequestParam String password, @RequestParam String imamgeURL) throws IOException, ExecutionException, InterruptedException {
+        firebaseService.updateUser(email, username, password, imamgeURL);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
