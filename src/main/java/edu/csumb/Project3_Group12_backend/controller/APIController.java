@@ -31,12 +31,20 @@ public class APIController {
         return firebaseService.getUsers();
     }
 
+
     @PostMapping("/createNewUser")
-    public ResponseEntity<Object> createNewUser(@RequestParam String email, @RequestParam String username, @RequestParam String password)
-                                                throws IOException, ExecutionException, InterruptedException {
-        firebaseService.saveNewUser(new Fullfiller(email, username, password));
+    public ResponseEntity<Object> createNewUser(@RequestBody Fullfiller fullfiller)
+            throws IOException, ExecutionException, InterruptedException {
+        firebaseService.saveNewUser(new Fullfiller(fullfiller));
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
+//    @PostMapping("/createNewUser")
+//    public ResponseEntity<Object> createNewUser(@RequestParam String email, @RequestParam String username, @RequestParam String password)
+//                                                throws IOException, ExecutionException, InterruptedException {
+//        firebaseService.saveNewUser(new Fullfiller(email, username, password));
+//        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+//    }
 
     /**
      this is the admin's get user route for now. The returned object contains the password, name, and other sensitve data

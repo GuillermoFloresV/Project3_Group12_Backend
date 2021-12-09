@@ -10,7 +10,7 @@ public class Fullfiller {
     private String email;
     private String password;
 
-    public Fullfiller(){}
+    public Fullfiller(Fullfiller fullfiller){}
 
     public Fullfiller(String email, String username, String password) {
         this.username = username;
