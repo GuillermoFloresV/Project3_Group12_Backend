@@ -35,8 +35,8 @@ public class APIControllerProjects {
                                                    @RequestParam String urlString, @RequestParam String datePublished, @RequestParam boolean isClaimed,
                                                    @RequestParam String claimedBy, @RequestParam boolean anon)
             throws IOException, ExecutionException, InterruptedException {
-        firebaseService.saveNewProject(new Project(projectName, budget, currency, description, email, proposer, urlString,
-                                                    datePublished, isClaimed, claimedBy, anon));
+        firebaseService.saveNewProject(new Project(projectName.trim(), budget, currency.trim(), description.trim(), email.trim(), proposer.trim(), urlString.trim(),
+                                                    datePublished.trim(), isClaimed, claimedBy.trim(), anon));
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
