@@ -90,7 +90,7 @@ public class FirebaseService {
      */
     public void saveNewProject(Project project) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
-        DocumentReference addedProjectRef = firestore.collection("posts").document(String.valueOf(project.getProject_id()));
+        DocumentReference addedProjectRef = firestore.collection("posts").document();
 
         System.out.println("Added project with ID: " + addedProjectRef.getId());
 
@@ -125,7 +125,7 @@ public class FirebaseService {
      */
     public List<Project> claimProject(Project project, List<Project> projectsClaimedList, Fullfiller fullfiller) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
-        DocumentReference claimedProjectReference = firestore.collection("post").document(String.valueOf(project.getProject_id()));
+        DocumentReference claimedProjectReference = firestore.collection("post").document(project.getProjectName());
         System.out.println("Trying to claimed project with ID: " + claimedProjectReference.getId());
 
         //check to see if project has already been claimed

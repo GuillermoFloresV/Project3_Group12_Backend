@@ -5,7 +5,7 @@ import com.google.cloud.firestore.GeoPoint;
 //  - Currently has unnecessary fields, getters, setters, and constructor arguments.
 public class Project {
 
-    private Integer project_id;
+
     private String projectName;
     private float budget;
     private String currency;
@@ -21,10 +21,9 @@ public class Project {
     //required by firestore
     public Project(){}
 
-    public Project(Integer project_id, String projectName, float budget, String description, String email,
+    public Project(String projectName, float budget, String description, String email,
                    String proposer, String currency, String urlString,
                    String datePublished, boolean isClaimed, String claimedBy, boolean anon) {
-        this.project_id = project_id;
         this.projectName = projectName;
         this.budget = budget;
         this.currency = currency;
@@ -39,8 +38,7 @@ public class Project {
     }
 
     //anonymous projects
-    public Project(Integer project_id, String projectName, String currency, boolean isClaimed, boolean anon) {
-        this.project_id = project_id;
+    public Project(String projectName, String currency, boolean isClaimed, boolean anon) {
         this.projectName = projectName;
         this.isClaimed = false;
         this.claimedBy = null;
@@ -128,15 +126,6 @@ public class Project {
 
     public void setAnon(boolean anon) {
         this.anon = anon;
-    }
-
-
-    public Integer getProject_id() {
-        return project_id;
-    }
-
-    public void setProject_id(Integer project_id) {
-        this.project_id = project_id;
     }
 
     public String getClaimedBy() {
