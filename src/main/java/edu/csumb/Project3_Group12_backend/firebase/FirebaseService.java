@@ -46,14 +46,14 @@ public class FirebaseService {
         ApiFuture<WriteResult> apiFuture = firestore.collection("users").document(fullfiller.getEmail()).set(fullfiller);
     }
 
-    public void updateUser(Fullfiller fullfiller) throws ExecutionException, InterruptedException {
+    public void updateUser(String email, String username, String password) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
         List<Fullfiller> fullfillers =  getUsers();
         //loop through the usersn until we find a match, once found, implement that user's new changes (email cannot be changed, just username and everything else)
         for (Fullfiller fullfiller1 : fullfillers){
-            if(fullfiller1.getEmail().equals(fullfiller.getEmail())){
+            if(fullfiller1.getEmail().equals(email)){
                 //match has been found
-                ApiFuture<WriteResult> apiFuture = firestore.collection("users").document(fullfiller.getEmail()).set(fullfiller);
+                ApiFuture<WriteResult> apiFuture = firestore.collection("users").document(email).set(new Fullfiller(username, password));
             }
         }
     }
