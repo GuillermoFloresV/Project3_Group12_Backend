@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 public class FirebaseService {
 
     //########### - Fullfiller Services - #############
-//testing the commits
+
     public List<Fullfiller> getUsers() throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
         CollectionReference collectionReference = firestore.collection("users");
