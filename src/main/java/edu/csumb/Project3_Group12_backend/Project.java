@@ -21,9 +21,14 @@ public class Project {
     //required by firestore
     public Project(){}
 
-    public Project(String projectName, float budget, String description, String email,
-                   String proposer, String currency, String urlString,
-                   String datePublished, boolean isClaimed, String claimedBy, boolean anon) {
+//    @RequestParam String projectName, @RequestParam float budget, @RequestParam String currency,
+//    @RequestParam String description, @RequestParam String email, @RequestParam String proposer,
+//    @RequestParam String urlString, @RequestParam String datePublished, @RequestParam boolean isClaimed,
+//    @RequestParam String claimedBy, @RequestParam boolean anon
+
+    public Project(String projectName, float budget,String currency, String description, String email,
+                   String proposer, String urlString, String datePublished,
+                    boolean isClaimed, String claimedBy, boolean anon) {
         this.projectName = projectName;
         this.budget = budget;
         this.currency = currency;
