@@ -90,11 +90,11 @@ public class FirebaseService {
      */
     public void saveNewProject(Project project) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
-        DocumentReference addedProjectRef = firestore.collection("posts").document();
+        CollectionReference addedProjectRef = firestore.collection("posts");
 
-        System.out.println("Added project with ID: " + addedProjectRef.getId());
-
-        ApiFuture<WriteResult> writeResult = addedProjectRef.set(project);
+        System.out.println("Added project with ID: " + addedProjectRef.document().getId());
+                                                                            //.document(fullfiller.getEmail()).set(fullfiller)
+        ApiFuture<WriteResult> writeResult = addedProjectRef.document().set(project);
     }
 
     /**
