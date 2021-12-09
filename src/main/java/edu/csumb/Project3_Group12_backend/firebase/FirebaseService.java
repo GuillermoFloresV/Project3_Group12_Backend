@@ -36,7 +36,27 @@ public class FirebaseService {
 
     public void saveNewUser(Fullfiller fullfiller) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
+        List<Fullfiller> fullfillers = getUsers();
+        //simple back-end error checking for duplicate emails & usernames
+        for (Fullfiller fullfiller1 : fullfillers){
+            if (fullfiller1.getEmail().equals(fullfiller.getEmail()) || fullfiller1.getUsername().equals(fullfiller.getUsername())){
+                return;
+            }
+        }
         ApiFuture<WriteResult> apiFuture = firestore.collection("users").document(fullfiller.getEmail()).set(fullfiller);
+    }
+
+    public void updateUser(String email, String username, String password) throws ExecutionException, InterruptedException {
+        Firestore firestore = FirestoreClient.getFirestore();
+        List<Fullfiller> fullfillers =  getUsers();
+        //loop through the usersn until we find a match, once found, implement that user's new changes (email cannot be changed, just username and everything else)
+        for (Fullfiller fullfiller1 : fullfillers){
+            if(fullfiller1.getEmail().equals(email)){
+                //match has been found
+                ApiFuture<WriteResult> apiFuture = firestore.collection("users").document(email).update("username", username);
+                ApiFuture<WriteResult> apiFuture2 = firestore.collection("users").document(email).update("password", password);
+            }
+        }
     }
 
 /**

@@ -20,6 +20,13 @@ public class Fullfiller {
         this.email = email;
         this.password = password;
     }
+
+    //For Users updating their own profile
+    public Fullfiller(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public Fullfiller(String email, String username, String password ,float rating, GeoPoint city, boolean isFullfiller) {
         this.username = username;
         this.rating = rating;
