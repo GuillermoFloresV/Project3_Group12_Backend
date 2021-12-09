@@ -1,5 +1,7 @@
 package edu.csumb.Project3_Group12_backend.controller;
 
+import com.fasterxml.jackson.databind.jsonschema.JsonSerializableSchema;
+import com.google.auto.value.extension.serializable.SerializableAutoValue;
 import edu.csumb.Project3_Group12_backend.Fullfiller;
 import edu.csumb.Project3_Group12_backend.Project;
 import edu.csumb.Project3_Group12_backend.firebase.FirebaseService;
@@ -30,21 +32,26 @@ public class APIControllerProjects {
         //                   String proposer, String currency, String urlString,
         //                   String datePublished, boolean isClaimed, String claimedBy, boolean anon)
     @PostMapping("/createNewProject")
-    public ResponseEntity<Object> createNewProject(@RequestParam Integer project_id, @RequestParam String projectName, @RequestParam float budget, String currency,
+    public ResponseEntity<Object> createNewProject(@RequestParam String projectName, @RequestParam float budget, @RequestParam String currency,
                                                    @RequestParam String description, @RequestParam String email, @RequestParam String proposer,
                                                    @RequestParam String urlString, @RequestParam String datePublished, @RequestParam boolean isClaimed,
                                                    @RequestParam String claimedBy, @RequestParam boolean anon)
             throws IOException, ExecutionException, InterruptedException {
-        firebaseService.saveNewProject(new Project(project_id, projectName, budget, currency, description, email, proposer, urlString,
-                                                    datePublished, isClaimed, claimedBy, anon));
+        firebaseService.saveNewProject(new Project(projectName.trim(), budget, currency.trim(), description.trim(), email.trim(), proposer.trim(), urlString.trim(),
+                                                    datePublished.trim(), isClaimed, claimedBy.trim(), anon));
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/claimProject")
-    public List<Project> claimProject(@RequestParam Project project, @RequestParam List<Project> projectsClaimedList, @RequestParam Fullfiller fullfiller)
+    public void claimProject(@RequestParam Project project, @RequestParam Fullfiller fullfiller)
             throws IOException, ExecutionException, InterruptedException {
-        return firebaseService.claimProject(project, projectsClaimedList, fullfiller);
     }
+    //**Old claimProject postMapping, i don't think we need the list
+//    @PostMapping("/claimProject")
+//    public List<Project> claimProject(@RequestParam Project project, @RequestParam List<Project> projectsClaimedList, @RequestParam Fullfiller fullfiller)
+//            throws IOException, ExecutionException, InterruptedException {
+//        return firebaseService.claimProject(project, projectsClaimedList, fullfiller);
+//    }
 
 
 }

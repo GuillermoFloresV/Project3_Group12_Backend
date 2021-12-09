@@ -32,6 +32,15 @@ public class APIController {
         return firebaseService.getUsers();
     }
 
+//
+//    @PostMapping("/createNewUser")
+//    public ResponseEntity<Object> createNewUser(@RequestBody Fullfiller newUser)
+//            throws IOException, ExecutionException, InterruptedException {
+//       // Fullfiller fullfiller = new Fullfiller(newUser.getEmail(),newUser.getUsername(), newUser.getPassword());
+//        firebaseService.saveNewUser(newUser);
+//        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+//    }
+
     @PostMapping("/createNewUser")
     public ResponseEntity<Object> createNewUser(@RequestParam String email, @RequestParam String username, @RequestParam String password) throws IOException, ExecutionException, InterruptedException {
         firebaseService.saveNewUser(new Fullfiller(email, username, password));
