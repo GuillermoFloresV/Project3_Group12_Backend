@@ -53,7 +53,8 @@ public class FirebaseService {
         for (Fullfiller fullfiller1 : fullfillers){
             if(fullfiller1.getEmail().equals(email)){
                 //match has been found
-                ApiFuture<WriteResult> apiFuture = firestore.collection("users").document(email).set(new Fullfiller(username, password));
+                ApiFuture<WriteResult> apiFuture = firestore.collection("users").document(email).update("username", username);
+                ApiFuture<WriteResult> apiFuture = firestore.collection("users").document(email).update("password", password);
             }
         }
     }
