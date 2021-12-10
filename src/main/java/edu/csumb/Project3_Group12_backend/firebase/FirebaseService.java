@@ -194,6 +194,22 @@ public class FirebaseService {
         System.out.println(id+ " has been deleted");
     }
 
+    public void updateTheProject(String id, String projectName, float budget, String description, String email, String currency,
+                                 String urlString, String datePublished, boolean anon) throws ExecutionException, InterruptedException {
+        Firestore firestore = FirestoreClient.getFirestore();
+        //update project
+        ApiFuture<WriteResult> apiFuture1 = firestore.collection("posts").document(id).update("projectName", projectName);
+        ApiFuture<WriteResult> apiFuture2 = firestore.collection("posts").document(id).update("budget", budget);
+        ApiFuture<WriteResult> apiFuture3 = firestore.collection("posts").document(id).update("description", description);
+        ApiFuture<WriteResult> apiFuture4 = firestore.collection("posts").document(id).update("email", email);
+        ApiFuture<WriteResult> apiFuture5 = firestore.collection("posts").document(id).update("currency", currency);
+        ApiFuture<WriteResult> apiFuture6 = firestore.collection("posts").document(id).update("urlString", urlString);
+        ApiFuture<WriteResult> apiFuture7 = firestore.collection("posts").document(id).update("datePublished", datePublished);
+        ApiFuture<WriteResult> apiFuture8 = firestore.collection("posts").document(id).update("anon", anon);
+        System.out.println(id+ " has been updated");
+    }
+
+
 
 }//end of class
 

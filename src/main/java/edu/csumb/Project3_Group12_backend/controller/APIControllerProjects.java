@@ -51,6 +51,16 @@ public class APIControllerProjects {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @PostMapping("/updateProject")
+    public ResponseEntity<Object> updateProject(@RequestParam String id, @RequestParam String projectName, @RequestParam float budget, @RequestParam String description,
+                                                @RequestParam String email, @RequestParam String currency,  @RequestParam String urlString,
+                                                @RequestParam String datePublished, @RequestParam boolean anon)
+            throws IOException, ExecutionException, InterruptedException {
+        firebaseService.updateTheProject(id.trim(), projectName.trim(), budget, description.trim(), email.trim(), currency.trim(),
+                urlString.trim(), datePublished.trim(), anon);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
 
 
 
