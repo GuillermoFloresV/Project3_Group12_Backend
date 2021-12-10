@@ -27,7 +27,7 @@ public class FirebaseService {
         List<QueryDocumentSnapshot> documentSnapshots = apiFuture.get().getDocuments();
 
         List<Fullfiller> users = new ArrayList<Fullfiller>();
-        for (DocumentSnapshot documentSnapshot : documentSnapshots){
+        for (DocumentSnapshot documentSnapshot : documentSnapshots) {
             users.add(documentSnapshot.toObject(Fullfiller.class));
         }
         return users;
@@ -38,11 +38,10 @@ public class FirebaseService {
         ApiFuture<WriteResult> apiFuture = firestore.collection("users").document(fullfiller.getEmail()).set(fullfiller);
     }
 
-/**
- *
- * @param email
- * @return user object with their data.
- */
+    /**
+     * @param email
+     * @return user object with their data.
+     */
     public Fullfiller adminGetUserDocument(String email) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
         DocumentReference docRef = firestore.collection("users").document(email);
@@ -57,14 +56,15 @@ public class FirebaseService {
         } else {
             System.out.println("No such user");
         }
-    return userDetails;
+        return userDetails;
     }
 
 
-
     //########### - Project Services - #############
+
     /**
      * Retrieves document in collection as map.
+     *
      * @return map (string => object) *For non-admin use*
      */
     //Todo: remove password field from map
@@ -84,20 +84,19 @@ public class FirebaseService {
     }
 
     /**
-     * @param project
-     * create a new project.
+     * @param project create a new project.
      */
     public void saveNewProject(Project project) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
         CollectionReference addedProjectRef = firestore.collection("posts");
 
         System.out.println("Added project with ID: " + addedProjectRef.document().getId());
-                                                                            //.document(fullfiller.getEmail()).set(fullfiller)
+        //.document(fullfiller.getEmail()).set(fullfiller)
         ApiFuture<WriteResult> writeResult = addedProjectRef.document().set(project);
     }
 
     /**
-     *retrieve all projects
+     * retrieve all projects
      */
     public List<Project> getProjects() throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
@@ -107,16 +106,15 @@ public class FirebaseService {
         List<QueryDocumentSnapshot> documentSnapshots = apiFuture.get().getDocuments();
 
         List<Project> projects = new ArrayList<Project>();
-        for (DocumentSnapshot documentSnapshot : documentSnapshots){
+        for (DocumentSnapshot documentSnapshot : documentSnapshots) {
             projects.add(documentSnapshot.toObject(Project.class));
         }
         return projects;
     }
 
-    /** **REMOVE list for testing*** (or create the fullfiller's lists first)
+    /**
+     * *REMOVE list for testing*** (or create the fullfiller's lists first)
      * clamProject updates the post document's claimedBy field with the fullfiller's email.
-     *
-     *
      */
     public void claimTheProject(String id, String email) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
@@ -141,7 +139,7 @@ public class FirebaseService {
                     boolean claimedProject = claimed1.booleanValue();
                     // Or you can use the boolean primitive type (Uncomment the following line if you want boolean primitive type)
                     // boolean claimed = Boolean.parseBoolean(docmument_claimed);
-                    System.out.println("claimedProject value:"+claimedProject);
+                    System.out.println("claimedProject value:" + claimedProject);
                     // Then check if the boolean isClaimed contains the value true or false
                     if (claimedProject) {
                         System.out.println("project has been claimed already");
@@ -160,5 +158,14 @@ public class FirebaseService {
                 }
             }
         });
-    }}
+    }
+
+    public void deleteTheProject(String id) throws ExecutionException, InterruptedException {
+        Firestore firestore = FirestoreClient.getFirestore();
+        firestore.collection("posts").document(id).delete();
+        System.out.println(id+ " has been deleted");
+    }
+
+
+}//end of class
 

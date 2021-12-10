@@ -43,19 +43,18 @@ public class APIControllerProjects {
         firebaseService.claimTheProject(id.trim(), email.trim());
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
-    //**Old claimProject postMapping, i don't think we need the list
-//    @PostMapping("/claimProject")
-//    public List<Project> claimProject(@RequestParam Project project, @RequestParam List<Project> projectsClaimedList, @RequestParam Fullfiller fullfiller)
-//            throws IOException, ExecutionException, InterruptedException {
-//        return firebaseService.claimProject(project, projectsClaimedList, fullfiller);
-//    }
+
+    @DeleteMapping("/deleteProject")
+    public ResponseEntity<Object> deleteProject(@RequestParam String id)
+            throws IOException, ExecutionException, InterruptedException {
+        firebaseService.deleteTheProject(id.trim());
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+
 
 
 }
 
-//      -- Testing --
-//    @GetMapping("/")
-//    public String test(){
-//        return "It works!";
-//    }
+
 
