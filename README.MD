@@ -1,6 +1,8 @@
 # FILA BACKEND
 *Erik Gallardo-Cruz, Guillermo Flores V, James Campbell, Michael Haidar*
 
+![Fila_logo1_small](https://user-images.githubusercontent.com/54544186/145600784-66c577d6-1407-4b4d-8cea-22808a144af2.png)
+
 This is the repo for our web-based API for this [project](https://github.com/jscampbell43/Project_3_Frontend_Team_12)
 
 Fila is a 3d-printing marketplace. Publishers are able to request projects (print jobs) across the platform. 
