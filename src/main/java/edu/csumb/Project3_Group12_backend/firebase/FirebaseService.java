@@ -3,6 +3,7 @@ package edu.csumb.Project3_Group12_backend.firebase;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.database.annotations.Nullable;
 import edu.csumb.Project3_Group12_backend.Fullfiller;
 import edu.csumb.Project3_Group12_backend.Project;
 import org.springframework.stereotype.Service;
@@ -114,86 +115,50 @@ public class FirebaseService {
 
     /** **REMOVE list for testing*** (or create the fullfiller's lists first)
      * clamProject updates the post document's claimedBy field with the fullfiller's email.
-     * its currently set up to also update a projectsClaimedList if we choose to keep a list of claimed projects
-     * we may want to consider just searching firestore whenever we want a list of projects
+     *
      *
      */
-    public void claimProject(String id, String email) throws ExecutionException, InterruptedException {
+    public void claimTheProject(String id, String email) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
-        //--get the project to be claimed:
 
-        DocumentReference claimedProjectReference = firestore.collection("post").document(id);
-        ApiFuture<DocumentSnapshot> potentialProject = claimedProjectReference.get();
-        Boolean hasBeenClaimed = potentialProject.get().getBoolean("isClaimed");
-        hasBeenClaimed = false;
-        System.out.println("is claimed? " + hasBeenClaimed);
-        //--get the user to claim project
-        DocumentReference claimedUserReference = firestore.collection("users").document(email);
-        ApiFuture<DocumentSnapshot> potentialClaimer = claimedUserReference.get();
-       // String claimer = potentialClaimer.get().getString(email);
+        DocumentReference dc = firestore.collection("posts").document(id);
+        dc.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirestoreException e) {
+                if (e != null) {
+                    System.err.println("Listen failed: " + e);
+                    return;
+                }
+                // IF the document exists
+                if (snapshot != null && snapshot.exists()) {
+                    System.out.println("Current data: " + snapshot.getData());
 
-//        ApiFuture<WriteResult> writeResult = addedProjectRef.document().set(project);
+                    // Get the isClaimed field of the document
+                    Boolean document_claimed = snapshot.getBoolean("isClaimed");
+                    // Convert the value to boolean
+                    Boolean claimed1 = Boolean.valueOf(document_claimed);
+                    boolean claimedProject = claimed1.booleanValue();
+                    // Or you can use the boolean primitive type (Uncomment the following line if you want boolean primitive type)
+                    // boolean claimed = Boolean.parseBoolean(docmument_claimed);
+                    System.out.println("claimedProject value:"+claimedProject);
+                    // Then check if the boolean isClaimed contains the value true or false
+                    if (claimedProject) {
+                        System.out.println("project has been claimed already");
+                        System.err.println("Listen failed: " + e);
+                        return;
+                    } else {
+                        firestore.collection("posts").document(id).update("isClaimed", true);
+                        firestore.collection("posts").document(id).update("claimedBy", email);
+                        System.out.println("project has been claimed successfully");
+                    }
+                } else {
+                    System.out.print("Current data may be null...but...");
+                    firestore.collection("posts").document(id).update("isClaimed", true);
+                    firestore.collection("posts").document(id).update("claimedBy", email);
+                    System.out.println("project has been claimed successfully");
+                }
+            }
+        });
+    }}
 
-        System.out.println(claimedUserReference + " is trying to claim project: " + claimedProjectReference );
-
-        if (!hasBeenClaimed || hasBeenClaimed==null) {
-            firestore.collection("posts").document(id).set(new Project("Washington D.C.")).get();
-            // [START fs_update_doc]
-            // [START firestore_data_set_field]
-            // Update an existing document
-            DocumentReference docRef = db.collection("cities").document("DC");
-
-            // (async) Update one field
-            ApiFuture<WriteResult> future = docRef.update("capital", true);
-
-            // ...
-            WriteResult result = future.get();
-            System.out.println("Write result: " + result);
-            // [END firestore_data_set_field]
-            // [END fs_update_doc]
-
-
-
-
-            ApiFuture<WriteResult> futureClaimer = claimedProjectReference.update("claimedBy", email);
-            ApiFuture<WriteResult> futureIsClaimed = claimedProjectReference.update("isClaimed", true);
-            WriteResult resultClaimer = futureClaimer.get();
-            WriteResult resultIsClaimed = futureIsClaimed.get();
-            System.out.println("Claim project write result: " + resultClaimer);
-            System.out.println("Claim project write result: " + resultIsClaimed);
-            System.out.println("project has been claimed successfully");
-        } else {
-            System.out.println("project has been claimed already");
-        }
-    }
-
-}
-//other option for user query: https://firebase.google.com/docs/firestore/query-data/get-data
-//    ApiFuture<QuerySnapshot> future =
-//               firestore.collection("users").whereEqualTo(email, true).get()
-
-
-//***previous version of claimProject -> takes a list which I don't think we'll be needing
-//public List<Project> claimProject(Project project, List<Project> projectsClaimedList, Fullfiller fullfiller) throws ExecutionException, InterruptedException {
-//    Firestore firestore = FirestoreClient.getFirestore();
-//    DocumentReference claimedProjectReference = firestore.collection("post").document(project.getProjectName());
-//    System.out.println("Trying to claimed project with ID: " + claimedProjectReference.getId());
-//
-//    //check to see if project has already been claimed
-//    Boolean claimed = false;
-//    Iterable<CollectionReference> collections =claimedProjectReference.listCollections();
-//    for (CollectionReference collRef : collections) {
-//        if(collRef.whereEqualTo("claimedBy",null).equals(false)){
-//            System.out.println("project has been claimed, collRef id: " + collRef.getId());
-//            claimed = true;
-//        }
-//    }
-//    if(!claimed) {
-//        ApiFuture<WriteResult> future = claimedProjectReference.update("claimedBy", fullfiller.getEmail());
-//        WriteResult result = future.get();
-//        System.out.println("Claim project write result: " + result);
-//        //Todo: add to claimed list:
-//    }
-//
-//    return projectsClaimedList;
-//}

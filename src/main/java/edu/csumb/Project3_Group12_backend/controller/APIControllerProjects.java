@@ -40,7 +40,7 @@ public class APIControllerProjects {
     @PostMapping("/claimProject")
     public ResponseEntity<Object> claimProject(@RequestParam String id, @RequestParam String email)
             throws IOException, ExecutionException, InterruptedException {
-        firebaseService.claimProject(id.trim(), email.trim());
+        firebaseService.claimTheProject(id.trim(), email.trim());
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     //**Old claimProject postMapping, i don't think we need the list
