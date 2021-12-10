@@ -116,22 +116,46 @@ public class FirebaseService {
      * clamProject updates the post document's claimedBy field with the fullfiller's email.
      * its currently set up to also update a projectsClaimedList if we choose to keep a list of claimed projects
      * we may want to consider just searching firestore whenever we want a list of projects
-     * @param project
-     * @param fullfiller
-     * @return a list of claimed projects by the user
+     *
      */
-    public void claimProject(Project project, Fullfiller fullfiller) throws ExecutionException, InterruptedException {
+    public void claimProject(String id, String email) throws ExecutionException, InterruptedException {
         Firestore firestore = FirestoreClient.getFirestore();
-        DocumentReference claimedProjectReference = firestore.collection("post").document(String.valueOf(project.getIsClaimed()));
-        DocumentReference claimedProjectReferenceName = firestore.collection("post").document(project.getProjectName());
-        System.out.println("Trying to claim project: " + claimedProjectReferenceName);
+        //--get the project to be claimed:
 
-        //check to see if project has already been claimed
-//        Boolean claimed = false;
+        DocumentReference claimedProjectReference = firestore.collection("post").document(id);
         ApiFuture<DocumentSnapshot> potentialProject = claimedProjectReference.get();
+        Boolean hasBeenClaimed = potentialProject.get().getBoolean("isClaimed");
+        hasBeenClaimed = false;
+        System.out.println("is claimed? " + hasBeenClaimed);
+        //--get the user to claim project
+        DocumentReference claimedUserReference = firestore.collection("users").document(email);
+        ApiFuture<DocumentSnapshot> potentialClaimer = claimedUserReference.get();
+       // String claimer = potentialClaimer.get().getString(email);
 
-        if (claimedProjectReference.equals(false)) {
-            ApiFuture<WriteResult> futureClaimer = claimedProjectReference.update("claimedBy", fullfiller.getUsername());
+//        ApiFuture<WriteResult> writeResult = addedProjectRef.document().set(project);
+
+        System.out.println(claimedUserReference + " is trying to claim project: " + claimedProjectReference );
+
+        if (!hasBeenClaimed || hasBeenClaimed==null) {
+            firestore.collection("posts").document(id).set(new Project("Washington D.C.")).get();
+            // [START fs_update_doc]
+            // [START firestore_data_set_field]
+            // Update an existing document
+            DocumentReference docRef = db.collection("cities").document("DC");
+
+            // (async) Update one field
+            ApiFuture<WriteResult> future = docRef.update("capital", true);
+
+            // ...
+            WriteResult result = future.get();
+            System.out.println("Write result: " + result);
+            // [END firestore_data_set_field]
+            // [END fs_update_doc]
+
+
+
+
+            ApiFuture<WriteResult> futureClaimer = claimedProjectReference.update("claimedBy", email);
             ApiFuture<WriteResult> futureIsClaimed = claimedProjectReference.update("isClaimed", true);
             WriteResult resultClaimer = futureClaimer.get();
             WriteResult resultIsClaimed = futureIsClaimed.get();

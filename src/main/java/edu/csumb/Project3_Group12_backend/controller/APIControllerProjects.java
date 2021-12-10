@@ -1,7 +1,5 @@
 package edu.csumb.Project3_Group12_backend.controller;
 
-import com.fasterxml.jackson.databind.jsonschema.JsonSerializableSchema;
-import com.google.auto.value.extension.serializable.SerializableAutoValue;
 import edu.csumb.Project3_Group12_backend.Fullfiller;
 import edu.csumb.Project3_Group12_backend.Project;
 import edu.csumb.Project3_Group12_backend.firebase.FirebaseService;
@@ -12,9 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -43,8 +38,10 @@ public class APIControllerProjects {
     }
 
     @PostMapping("/claimProject")
-    public void claimProject(@RequestParam Project project, @RequestParam Fullfiller fullfiller)
+    public ResponseEntity<Object> claimProject(@RequestParam String id, @RequestParam String email)
             throws IOException, ExecutionException, InterruptedException {
+        firebaseService.claimProject(id.trim(), email.trim());
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     //**Old claimProject postMapping, i don't think we need the list
 //    @PostMapping("/claimProject")

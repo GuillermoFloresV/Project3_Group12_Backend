@@ -38,7 +38,7 @@ public class Project {
         this.claimedBy = claimedBy;
         this.urlString = urlString;
         this.datePublished = datePublished;
-        this.isClaimed=isClaimed;
+        this.isClaimed=false;
         this.anon = anon;
     }
 
